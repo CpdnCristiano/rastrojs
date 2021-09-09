@@ -24,7 +24,7 @@ export class RastroJS {
      *
      * @param  {string} code
      */
-     public static isValidOrderCode = (code: string) => /^[A-Z]{2}[0-9]{9}[A-Z]{2}$/.test(code);
+    public static isValidOrderCode = (code: string) => /^[A-Z]{2}[0-9]{9}[A-Z]{2}$/.test(code);
 
 
     /**
@@ -42,7 +42,7 @@ export class RastroJS {
         });
 
         const request = https.request(
-            this.uri, 
+            this.uri,
             {
                 method: 'POST',
                 secureOptions: 0,
@@ -63,8 +63,8 @@ export class RastroJS {
                     const track = this.parseResponse(html);
 
                     resolve(track ? {
-                        code, 
-                        type: TypesEnum[code.toUpperCase().substr(0,2)] || TypesEnum.UNKNOWN, 
+                        code,
+                        type: TypesEnum[code.toUpperCase().substr(0, 2)] || TypesEnum.UNKNOWN,
                         ...track
                     } : {
                         code,
@@ -109,16 +109,16 @@ export class RastroJS {
                     .map(column => (document(column).text().replace(/[\n\r\t]/g, '')).trim())
                     .filter(data => !!data)
                     .map(data => data.split(/\s\s+/g))
-
+                console.log(lineData);
                 // Create a track object
                 return {
-                    locale: lineData[0][2].toLowerCase(),
-                    status: lineData[1][0].toLowerCase(),
-                    observation: lineData[1][1] ? lineData[1][1].toLowerCase() : null,
+                    locale: lineData[0][2],
+                    status: lineData[1][0],
+                    observation: lineData[1][1] ? lineData[1][1] : null,
                     trackedAt: new Date(lineData[0][0].split('/').reverse().join('-').concat(` ${lineData[0][1]} -3`)),
                 };
 
-        });
+            });
 
         // Not found order
         if (!tracks.length) return null;
@@ -127,12 +127,12 @@ export class RastroJS {
         tracks.reverse();
 
         // Detect first and last tracks to calculate dates
-        const [firstTrack, lastTrack] = [tracks[0],  tracks[tracks.length-1]];
+        const [firstTrack, lastTrack] = [tracks[0], tracks[tracks.length - 1]];
 
         // Return full order tracking object
         return {
             tracks,
-            isDelivered: lastTrack.status.includes('objeto entregue'),
+            isDelivered: lastTrack.status.toLowerCase().includes('objeto entregue'),
             postedAt: firstTrack.trackedAt,
             updatedAt: lastTrack.trackedAt,
         };
