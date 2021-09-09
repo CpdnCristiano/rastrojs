@@ -112,9 +112,9 @@ export class RastroJS {
                 console.log(lineData);
                 // Create a track object
                 return {
-                    locale: lineData[0][2],
+                    locale: (lineData[0][2])?.replace(/ \/ /g, ' - '),
                     status: lineData[1][0],
-                    observation: lineData[1][1] ? lineData[1][1] : null,
+                    observation: (lineData[1][1] ? lineData[1][1] : null)?.replace(/ \/ /g, ' - '),
                     trackedAt: new Date(lineData[0][0].split('/').reverse().join('-').concat(` ${lineData[0][1]} -3`)),
                 };
 
