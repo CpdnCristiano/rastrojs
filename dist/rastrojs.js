@@ -18,6 +18,7 @@ class RastroJS {
                     isInvalid: true,
                     error: 'invalid_code'
                 });
+            console.log(this.uri.href);
             const request = https_1.default.request(this.uri, {
                 method: 'POST',
                 secureOptions: 0,

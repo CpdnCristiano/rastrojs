@@ -40,7 +40,7 @@ export class RastroJS {
             isInvalid: true,
             error: 'invalid_code'
         });
-
+        console.log(this.uri.href);
         const request = https.request(
             this.uri,
             {
