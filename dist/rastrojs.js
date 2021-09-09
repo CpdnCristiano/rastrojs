@@ -62,7 +62,6 @@ class RastroJS {
                 .map(column => (document(column).text().replace(/[\n\r\t]/g, '')).trim())
                 .filter(data => !!data)
                 .map(data => data.split(/\s\s+/g));
-            console.log(lineData);
             return {
                 locale: (lineData[0][2])?.replace(/ \/ /g, ' - '),
                 status: lineData[1][0],
